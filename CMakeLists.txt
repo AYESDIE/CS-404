@@ -15,3 +15,4 @@ add_executable(lab3_3 Lab03/3_3.cpp)
 add_executable(lab3_4 Lab03/3_4.cpp)
 
 add_executable(lab4_1 Lab04/4_1.cpp)
+add_executable(lab4_2 Lab04/4_2.cpp)
