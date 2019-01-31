@@ -95,6 +95,10 @@ namespace ens
             }
         }
 
+        void treetraverser(node* pointer)
+        {
+
+        }
 
     public:
         tree() {
@@ -109,6 +113,11 @@ namespace ens
             indexer.clear();
             indexer.push_back(root);
             bfstraverser(counter, indexer);
+        }
+
+        void _bruteprint()
+        {
+            treetraverser(root);
         }
 
         /**
