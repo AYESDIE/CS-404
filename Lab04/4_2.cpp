@@ -3,11 +3,23 @@
 
 namespace ens
 {
-    struct node
-    {
+    class node{
         bool flag;
-        struct node* left;
-        struct node* right;
+        std::vector<node*> linker;
+
+        void set(node* l, int x) { linker[x] = l; }
+    public:
+        node() {
+            flag = false;
+            linker.clear();
+            linker.push_back(nullptr);
+            linker.push_back(nullptr);
+        }
+        bool isFlag() const {return flag;}
+        const std::vector<node*> &getLinker() const { return linker; }
+        void setLeft(node* l) { set(l, 0); }
+        void setRight(node* r) { set(r, 1); }
+        void setFlag(bool x) { flag = x; }
     };
 
 
@@ -15,21 +27,6 @@ namespace ens
     class tree
     {
         node* root;
-
-        /**
-         * Creates a new node.
-         *
-         * @param flag (default = false)
-         * @return A new node.
-         */
-        node* newNode(bool flag = false)
-        {
-            node* f = new node;
-            f->flag = flag;
-            f->left = nullptr;
-            f->right = nullptr;
-            return f;
-        }
 
         /**
          * Converts integer to boolean.
@@ -80,96 +77,10 @@ namespace ens
             std::cout<<std::endl;
         }
 
-        void bfstraverser(
-                std::vector<size_t> counter,
-                std::vector<node*> indexer)
-        {
-            std::vector<size_t> ncounter;
-            std::vector<node*> nindexer;
-            for (int i = 0; i < indexer.size(); ++i) {
-                if(indexer[i]->left != nullptr)
-                {
-                    nindexer.push_back(indexer[i]->left);
-                }
 
-            }
-        }
-
-        void treetraverser(node* pointer)
-        {
-
-        }
 
     public:
-        tree() {
-            root = newNode();
-        }
-
-        void _print(){
-            std::vector<size_t> counter;
-            std::vector<node*> indexer;
-            counter.clear();
-            counter.push_back(1);
-            indexer.clear();
-            indexer.push_back(root);
-            bfstraverser(counter, indexer);
-        }
-
-        void _bruteprint()
-        {
-            treetraverser(root);
-        }
-
-        /**
-         * Destroys the tree to remove an element
-         * @param x element to be deleted
-         * @return root/nullptr
-         */
-        void _delete(size_t x)
-        {
-            node* pointer = root;
-
-            // Keeps track of pointer
-            node* hook = pointer;
-            std::vector b = int2bool(x);
-            b.pop_back();
-            for (int i = b.size() - 1; i >= 0 ; --i) {
-                // Jump into left subtree
-                if (b[i] == 0)
-                {
-                    // Terminates if the path doesn't exist
-                    if(pointer->left == nullptr)
-                        return;
-
-                    if(pointer->flag)
-                        hook = pointer;
-
-                    pointer = pointer->left;
-                }
-                else
-                {
-                    if(pointer->right == nullptr)
-                        return;
-
-                    if(pointer->flag)
-                        hook = pointer;
-
-                    pointer = pointer->right;
-                }
-
-                if(i == 0)
-                {
-                    pointer->flag = false;
-                }
-            }
-
-            //  Remove redundant nodes that don't hold any information
-            if(!hook->left->flag)
-                hook->left = nullptr;
-
-            if(!hook->right->flag)
-                hook->right = nullptr;
-        }
+        tree() {}
 
         /**
          * Expands the tree to add any element
@@ -186,8 +97,9 @@ namespace ens
                 if(b[i] == 0)
                 {
                     std::cout<<"EL ";
+                    std::vector<node*> linker = pointer->getLinker();
                     //  if left there is no left subtree
-                    if(pointer->left == nullptr)
+                    if(linker[0] == nullptr)
                     {
                         std::cout<<"N ";
                         pointer->left = newNode();
@@ -220,5 +132,4 @@ int main()
     x._insert(10);
     x._insert(39);
     x._insert(10);
-    x.print();
 }
