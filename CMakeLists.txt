@@ -22,3 +22,5 @@ add_executable(lab5_2 Lab05/5_2.cpp)
 
 add_executable(lab6_1 Lab06/6_1.cpp)
 add_executable(lab6_2 Lab06/6_2.cpp)
+
+add_executable(lab7_1 Lab07/7_1.cpp)
